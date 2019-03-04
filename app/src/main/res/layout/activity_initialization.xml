@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="match_parent"
+android:background="@drawable/parchment_background">
+
+    <TextView
+            android:text="@string/welcome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/initializationTitle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:textSize="28sp" android:layout_marginTop="24dp" android:textStyle="bold"/>
+    <TextView
+            android:text="@string/Welcome_Paragraph"
+            android:fontFamily="@font/daniel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" android:id="@+id/textView4"
+            app:layout_constraintTop_toBottomOf="@+id/initializationTitle" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="32dp" android:layout_marginRight="32dp"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="32dp"
+            android:layout_marginStart="32dp" android:layout_marginTop="16dp" android:textSize="24sp"/>
+    <Button
+            android:text="@string/stats"
+            android:fontFamily="@font/daniel"
+            android:background="@drawable/spash_gradient"
+            android:alpha="@android:integer/config_mediumAnimTime"
+            android:layout_width="0dp"
+            android:layout_height="0dp" android:id="@+id/statsButton" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="32dp" android:layout_marginRight="32dp"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginLeft="32dp" android:layout_marginStart="32dp"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintBottom_toTopOf="@+id/skillsButton"
+            app:layout_constraintVertical_chainStyle="spread_inside"
+            app:layout_constraintTop_toBottomOf="@+id/textView4" android:textSize="50sp"
+            android:layout_marginTop="8dp"/>
+    <Button
+            android:text="@string/skills"
+            android:fontFamily="@font/daniel"
+            android:background="@drawable/spash_gradient"
+            android:layout_width="0dp"
+            android:layout_height="0dp" android:id="@+id/skillsButton" android:layout_marginTop="32dp"
+            app:layout_constraintTop_toBottomOf="@+id/statsButton" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="32dp" android:layout_marginRight="32dp"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="32dp"
+            android:layout_marginStart="32dp" app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintBottom_toTopOf="@+id/notesButton" android:textSize="50sp"/>
+    <Button
+            android:text="@string/notes"
+            android:fontFamily="@font/daniel"
+            android:background="@drawable/spash_gradient"
+            android:layout_width="0dp"
+            android:layout_height="0dp" android:id="@+id/notesButton" android:layout_marginTop="32dp"
+            app:layout_constraintTop_toBottomOf="@+id/skillsButton" android:layout_marginBottom="32dp"
+            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="32dp" android:layout_marginRight="32dp"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="32dp"
+            android:layout_marginStart="32dp" app:layout_constraintHorizontal_bias="0.0" android:textSize="50sp"/>
+</android.support.constraint.ConstraintLayout>

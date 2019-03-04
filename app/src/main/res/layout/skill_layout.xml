@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             xmlns:tools="http://schemas.android.com/tools"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="wrap_content">
+
+    <ImageButton
+            android:layout_width="40dp"
+            android:layout_height="30dp" android:id="@+id/inc"
+            android:background="@drawable/up_arrow"
+            android:contentDescription="@string/increase_exponent_arrow"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/dec" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
+            app:layout_constraintHorizontal_chainStyle="packed"/>
+    <ImageButton
+            android:layout_width="40dp"
+            android:layout_height="30dp" android:id="@+id/dec"
+            android:background="@drawable/down_arrow"
+            android:contentDescription="@string/decrease_exponent_arrow"
+            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintTop_toBottomOf="@+id/inc"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp" app:layout_constraintEnd_toStartOf="@+id/edit_exp"
+            android:layout_marginEnd="8dp" android:layout_marginRight="8dp"
+            app:layout_constraintHorizontal_chainStyle="spread"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/edit_exp"
+            app:layout_constraintStart_toEndOf="@+id/dec" android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            tools:text="@string/skill_exp_hint" android:textSize="30sp"
+            app:fontFamily="@font/daniel" android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edit_name" android:layout_marginTop="8dp"/>
+    <EditText
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" android:id="@+id/edit_name"
+            app:fontFamily="@font/daniel"
+            android:textSize="18sp"
+            android:background="@android:color/transparent"
+            android:hint="@string/skill_name"
+            app:layout_constraintStart_toEndOf="@+id/inc"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            android:inputType="text" android:layout_marginLeft="8dp" android:layout_marginStart="8dp"/>
+    <Button
+            android:text="@string/editting_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/editSkillDeleteButton"
+            app:layout_constraintEnd_toStartOf="@+id/editSkillSaveButton" android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp" android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/edit_name" android:background="@drawable/delete_button"
+            android:textColor="@android:color/background_light" android:textSize="14sp"/>
+    <Button
+            android:id="@+id/editSkillSaveButton"
+            android:text="@string/editting_save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/edit_name"
+            android:textSize="14sp"
+            android:background="@drawable/save_button"/>
+
+</android.support.constraint.ConstraintLayout>

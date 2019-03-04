@@ -1,0 +1,33 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:context="com.bascomC.bwcharacter.andyr.bascomC.bwcharacter.StatsActivity">
+
+    <item android:id="@+id/action_descriptions"
+          android:title="@string/skill_descriptions"
+          app:showAsAction="never"/>
+
+    <!--<item android:id="@+id/action_settings"-->
+          <!--android:title="@string/action_settings"-->
+          <!--app:showAsAction="never"/>-->
+
+    <item android:id="@+id/action_initialize"
+          android:title="@string/initialization_process"
+          app:showAsAction="never">
+
+        <menu>
+
+            <item android:id="@+id/redo"
+                  android:title="@string/whole_initialization"/>
+            <item android:id="@+id/redoStats"
+                  android:title="@string/stats"/>
+            <item android:id="@+id/redoSkills"
+                  android:title="@string/skills"/>
+            <item android:id="@+id/redoNotes"
+                  android:title="@string/notes"/>
+
+        </menu>
+
+    </item>
+
+</menu>

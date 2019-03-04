@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="com.bascomC.bwcharacter">
+
+
+
+    <application
+            android:allowBackup="true"
+            android:icon="@mipmap/bw_logo_round"
+            android:label="@string/app_name"
+            android:roundIcon="@mipmap/bw_logo_round"
+            android:supportsRtl="true"
+            android:theme="@style/AppTheme">
+        <activity
+                android:name="andyr.bascomC.bwcharacter.StatsActivity"
+                android:label="@string/app_name"
+                android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        <activity
+                android:name="andyr.bascomC.bwcharacter.SkillsActivity"
+                android:parentActivityName="andyr.bascomC.bwcharacter.StatsActivity"
+                android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+                android:name="andyr.bascomC.bwcharacter.NotesActivity"
+                android:parentActivityName="andyr.bascomC.bwcharacter.SkillsActivity"
+                android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+                android:name="andyr.bascomC.bwcharacter.InitializationActivity"
+                android:parentActivityName="andyr.bascomC.bwcharacter.SkillsActivity"
+                android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+                android:name="andyr.bascomC.bwcharacter.SkillDescriptionsActivity"
+                android:windowSoftInputMode="adjustPan"
+                android:parentActivityName="andyr.bascomC.bwcharacter.SkillsActivity"
+                android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity android:name="andyr.bascomC.bwcharacter.SplashPage"
+                  android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

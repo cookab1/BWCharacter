@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:tools="http://schemas.android.com/tools"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             android:id="@+id/main_content"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="match_parent"
+                                             android:fitsSystemWindows="true"
+                                             tools:context="andyr.bascomC.bwcharacter.StatsActivity">
+
+    <!--<android.support.design.widget.AppBarLayout-->
+    <!--android:id="@+id/appbar"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:paddingTop="@dimen/appbar_padding_top"-->
+    <!--android:theme="@style/AppTheme.AppBarOverlay">-->
+
+    <Button
+            android:text="@string/stats"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/stats3"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/skills3"
+            android:background="@drawable/nav_button"/>
+    <Button
+            android:text="@string/skills"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/skills3"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/stats3"
+            app:layout_constraintEnd_toStartOf="@+id/notes3"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            android:background="@drawable/nav_button"/>
+    <Button
+            android:text="@string/notes"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/notes3"
+            app:layout_constraintStart_toEndOf="@+id/skills3"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:background="@drawable/nav_button_selected"/>
+
+    <android.support.constraint.ConstraintLayout
+            android:id="@+id/mainConstraintLayout"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/skills3" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="@drawable/parchment_background">
+
+
+        <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                app:popupTheme="@style/AppTheme.PopupOverlay"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent" app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="8dp" android:layout_marginRight="8dp"
+                app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp" android:background="@android:color/transparent"
+                android:layout_marginTop="16dp">
+
+        </android.support.v7.widget.Toolbar>
+
+
+        <android.support.v7.widget.Toolbar
+                android:id="@+id/header"
+                android:layout_width="257dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent" android:background="@drawable/header_notes"
+                app:layout_constraintEnd_toEndOf="@+id/toolbar" android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp" app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginLeft="8dp" android:layout_marginStart="8dp" android:layout_marginTop="16dp">
+
+        </android.support.v7.widget.Toolbar>
+
+        <android.support.v7.widget.RecyclerView
+
+                android:id="@+id/notesRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:padding="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/toolbar"
+                app:layout_constraintBottom_toBottomOf="@+id/mainConstraintLayout">
+
+        </android.support.v7.widget.RecyclerView>
+
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.design.widget.FloatingActionButton
+            android:id="@+id/noteFab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:layout_margin="@dimen/fab_margin"
+            app:srcCompat="@android:drawable/ic_input_add"
+            app:layout_constraintBottom_toTopOf="@+id/notes3"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+
+</android.support.constraint.ConstraintLayout>

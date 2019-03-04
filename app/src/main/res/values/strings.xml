@@ -1,0 +1,57 @@
+<resources>
+    <string name="app_name">BWCharacter</string>
+    <string name="action_settings">Settings</string>
+
+    <!--Skill List Item View String-->
+    <string name="skill_name_hint">Skill Name</string>
+    <string name="stat_name_hint">Stat Name</string>
+
+    <string name="obstacles">Obstacles</string>
+    <string name="forks">FoRKs</string>
+    <string name="skilltype">Skill Type</string>
+    <string name="tools">Tools</string>
+    <string name="restrictions">Restrictions</string>
+
+    <!--content descriptions-->
+    <string name="skill_image_view">Skill Shade Box</string>
+    <string name="skill_image_button">Skill Test Representation Image</string>
+    <string name="stat_image_view">Stat Shade Box</string>
+    <string name="stat_image_button">Stat Test Representation Image</string>
+    <string name="notes">Notes</string>
+    <string name="skills">Skills</string>
+    <string name="stats">Stats</string>
+    <string name="skill_exp_hint">0</string>
+    <string name="skill_shade">Skill Shade</string>
+    <string name="fpd_indicators">Fate Personna and Deeds Indicators</string>
+    <string name="routine">Routine</string>
+    <string name="difficult">Difficult</string>
+    <string name="challenging">Challenging</string>
+    <string name="test_dialogue_prompt">What kind of test was it?</string>
+    <string name="note_done">Done</string>
+    <string name="add_note_hint">Add Note</string>
+    <string name="skill_name">Skill Name</string>
+    <string name="increase_exponent_arrow">Increase Exponent Arrow</string>
+    <string name="decrease_exponent_arrow">Decrease Exponent Arrow</string>
+    <string name="editting_save">Save</string>
+    <string name="editting_mode">Editting Mode</string>
+    <string name="editting_delete">Delete</string>
+    <string name="Welcome_Paragraph">Welcome first-time user of BWCharacter. Please take this time to initialize your character.</string>
+    <string name="welcome">Welcome to BWCharacter</string>
+    <string name="initialization_process">Initialization Process</string>
+    <string name="whole_initialization">Whole initialization</string>
+    <string name="return_to_character">Return To Character</string>
+    <string name="see_progres">See Andy\'s Progres</string>
+    <string name="skill_descriptions">Skill Descriptions</string>
+    <string name="search_skills">Search Skills</string>
+    <string name="beliefs_instincts">Beliefs/Instincts</string>
+    <string name="artha">Artha</string>
+    <string name="artha_gear">Artha/Gear</string>
+    <string name="traits_relationships">Traits/Relationships</string>
+    <string name="belief_3">Belief 3</string>
+    <string name="belief_2">Belief 2</string>
+    <string name="belief_1">Belief 1</string>
+    <string name="instinct_3">Instinct 3</string>
+    <string name="instinct_2">Instinct 2</string>
+    <string name="instinct_1">Instinct 1</string>
+    <string name="learning">Learning</string>
+</resources>
