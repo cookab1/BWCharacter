@@ -4,6 +4,8 @@ import andyr.bascomC.bwcharacter.Descriptions
 
 const val EXTRA_CHARACTER = "character"
 
+val STAT_NAME = listOf("Will", "Power", "Agility", "Perception", "Forte", "Speed")
+val ATTRIBUTE_NAME = listOf("Health", "Steel", "Reflexes", "Mortal Wound", "Circles", "Resources")
 val TEST_TYPE = listOf("Routine", "Difficult", "Challenging")
 val TRAIT_TYPE = listOf("Char", "DT", "Call-On")
 val RELATIONSHIP_TYPE = listOf("Relationships", "Circles", "Named Circles", "Enemy Circles")

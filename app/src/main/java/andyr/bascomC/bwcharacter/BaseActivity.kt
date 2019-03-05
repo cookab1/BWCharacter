@@ -73,7 +73,7 @@ open class BaseActivity : AppCompatActivity() {
         }
     }
 
-    private fun compileDescription(skill: andyr.bascomC.bwcharacter.Descriptions, context: Context) : String {
+    private fun compileDescription(skill: Descriptions, context: Context) : String {
         var description: String = skill.description + "<br/><br/>"
 
         for ((key, value) in skill.extras) {

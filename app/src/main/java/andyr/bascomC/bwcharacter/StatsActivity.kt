@@ -12,6 +12,7 @@ import android.widget.TextView
 import android.widget.Toast
 import com.bascomC.andyr.bwcharacter.Skill
 import andyr.bascomC.bwcharacter.Utilities.TEST_TYPE
+import com.bascomC.bwcharacter.R
 import com.google.gson.Gson
 
 import kotlinx.android.synthetic.main.activity_stats.*
@@ -19,25 +20,26 @@ import kotlinx.android.synthetic.main.skill_layout.*
 import kotlinx.android.synthetic.main.skill_list_item.*
 import kotlinx.android.synthetic.main.test_click_dialogue.*
 
-class StatsActivity : andyr.bascomC.bwcharacter.BaseActivity() {
+class StatsActivity : BaseActivity() {
 
-    private lateinit var character: andyr.bascomC.bwcharacter.Character
+    private lateinit var character: Character
     private var editting = false
     private var firstTimeUser = false
+    private var onStatsTab = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(com.bascomC.bwcharacter.R.layout.activity_stats)
 
-        andyr.bascomC.bwcharacter.CharacterManager.Companion.instance.setPrefs(getPreferences(Context.MODE_PRIVATE))
-        andyr.bascomC.bwcharacter.CharacterManager.Companion.instance.setPrefsEditor()
+        CharacterManager.instance.setPrefs(getPreferences(Context.MODE_PRIVATE))
+        CharacterManager.instance.setPrefsEditor()
 
         //reset preferences to original character
 //        character = CharacterManager.instance.getCharacter()
 //        CharacterManager.instance.saveCharacter()
 
         character = loadCharacter()
-        andyr.bascomC.bwcharacter.CharacterManager.Companion.instance.setCharacter(character)
+        CharacterManager.instance.setCharacter(character)
 
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
@@ -46,39 +48,40 @@ class StatsActivity : andyr.bascomC.bwcharacter.BaseActivity() {
 
         if (firstTimeUser) {
             firstTimeUser = false
-            val intent = Intent(this, andyr.bascomC.bwcharacter.InitializationActivity::class.java)
+            val intent = Intent(this, InitializationActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
             startActivity(intent)
         }
 
         statsRecyclerView.layoutManager = LinearLayoutManager(this)
-        statsRecyclerView.adapter = andyr.bascomC.bwcharacter.ListAdapter(
-            character.stats,
-            this,
-            object : andyr.bascomC.bwcharacter.ClickListener {
-                override fun onPositionClicked(position: Int, view: View) {
-                    handleStatClick(position, view)
-                }
-
-                override fun onLongClicked(position: Int, view: View) {
-                    handleLongStatClick(position, view)
-                }
-            })
+        setList(character.stats)
 
         //Button Listeners
         returnToCharacter.setOnClickListener {
-            val intent = Intent(this, andyr.bascomC.bwcharacter.SkillsActivity::class.java)
+            val intent = Intent(this, SkillsActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
             startActivity(intent)
         }
 
         notes1.setOnClickListener {
-            val intent = Intent(this, andyr.bascomC.bwcharacter.NotesActivity::class.java)
+            val intent = Intent(this, NotesActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
             startActivity(intent)
         }
 
         statsEdittingSaveButton.setOnClickListener { setEditting(false) }
+        statsButton.setOnClickListener {
+            if(!onStatsTab) {
+                onStatsTab = true
+                setList(character.stats)
+            }
+        }
+        attributesButton.setOnClickListener {
+            if(onStatsTab) {
+                onStatsTab = false
+                setList(character.attributes)
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -87,10 +90,92 @@ class StatsActivity : andyr.bascomC.bwcharacter.BaseActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        var initializer = Initializer(character)
         return when (item.itemId) {
-            com.bascomC.bwcharacter.R.id.action_descriptions -> {
-                val intent = Intent(this, andyr.bascomC.bwcharacter.SkillDescriptionsActivity::class.java)
+            R.id.action_descriptions -> {
+                val intent = Intent(this, SkillDescriptionsActivity::class.java)
                 startActivity(intent)
+                true
+            }
+            R.id.redo -> {
+                val viewDialog = AlertDialog.Builder(this)
+                viewDialog.setMessage("Are you sure you want to redo your initialization? This will erase all your current data.")
+                viewDialog.setPositiveButton("Yes") { _, _ ->  }
+                viewDialog.setNegativeButton("No") { _, _ ->  }
+                viewDialog.setCancelable(false)
+                val customDialog = viewDialog.create()
+                customDialog.show()
+                customDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
+                    character.stats.forEach {
+                        it.mExponent = 0
+                        it.mTests = 0
+                    }
+                    character.attributes.forEach {
+                        it.mExponent = 0
+                        it.mTests = 0
+                    }
+                    character.skills.clear()
+                    character.learning.clear()
+                    character.notes.clear()
+                    val intent = Intent(this, InitializationActivity::class.java)
+                    startActivity(intent)
+                    customDialog.dismiss()
+                }
+                true
+            }
+            R.id.redoStats -> {
+                val viewDialog = AlertDialog.Builder(this)
+                viewDialog.setMessage("Are you sure you want to redo your Stats' initialization? This will erase your current Stats data.")
+                viewDialog.setPositiveButton("Yes") { _, _ ->  }
+                viewDialog.setNegativeButton("No") { _, _ ->  }
+                viewDialog.setCancelable(false)
+                val customDialog = viewDialog.create()
+                customDialog.show()
+                customDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
+                    character.stats.forEach {
+                        it.mExponent = 0
+                        it.mTests = 0
+                    }
+                    initializer.initializeStats(0, layoutInflater, this)
+                    statsRecyclerView.adapter?.notifyDataSetChanged()
+                    customDialog.dismiss()
+                }
+                true
+            }
+            R.id.redoAttributes -> {
+                val viewDialog = AlertDialog.Builder(this)
+                viewDialog.setMessage("Are you sure you want to redo your Attributes' initialization? This will erase your current Attribute data.")
+                viewDialog.setPositiveButton("Yes") { _, _ ->  }
+                viewDialog.setNegativeButton("No") { _, _ ->  }
+                viewDialog.setCancelable(false)
+                val customDialog = viewDialog.create()
+                customDialog.show()
+                customDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
+                    character.attributes.forEach {
+                        it.mExponent = 0
+                        it.mTests = 0
+                    }
+                    initializer.initializeAttributes(0, layoutInflater, this)
+                    statsRecyclerView.adapter?.notifyDataSetChanged()
+                    customDialog.dismiss()
+                }
+                true
+            }
+            R.id.redoSkills -> {
+                val viewDialog = AlertDialog.Builder(this)
+                viewDialog.setMessage("Are you sure you want to redo your Skills' initialization? This will erase your current Skills data.")
+                viewDialog.setPositiveButton("Yes") { _, _ ->  }
+                viewDialog.setNegativeButton("No") { _, _ ->  }
+                viewDialog.setCancelable(false)
+                val customDialog = viewDialog.create()
+                customDialog.show()
+                customDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
+                    character.skills.clear()
+                    character.learning.clear()
+                    initializer.initializeSkills(layoutInflater, this)
+                    statsRecyclerView.adapter?.notifyDataSetChanged()
+                    customDialog.dismiss()
+                }
                 true
             }
             else -> {
@@ -99,40 +184,43 @@ class StatsActivity : andyr.bascomC.bwcharacter.BaseActivity() {
         }
     }
 
-    private fun loadCharacter(): andyr.bascomC.bwcharacter.Character {
+    private fun loadCharacter(): Character {
         val gson = Gson()
-        val json = andyr.bascomC.bwcharacter.CharacterManager.Companion.instance.getPrefs().getString("Character", "")
-        if (gson.fromJson<andyr.bascomC.bwcharacter.Character>(
+        val json = CharacterManager.instance.getPrefs().getString("Character", "")
+        if (gson.fromJson<Character>(
                 json,
-                andyr.bascomC.bwcharacter.Character::class.java
+                Character::class.java
             ) == null
         ) {
             firstTimeUser = true
-            return andyr.bascomC.bwcharacter.CharacterManager.Companion.instance.saveCharacter()
+            return CharacterManager.instance.saveCharacter()
         }
-        return gson.fromJson<andyr.bascomC.bwcharacter.Character>(json, andyr.bascomC.bwcharacter.Character::class.java)
-    }
-
-    private fun AddStat() {
-        character.stats.add(Skill("new Stat", 3))
-        andyr.bascomC.bwcharacter.CharacterManager.Companion.instance.saveCharacter()
-        statsRecyclerView.adapter?.notifyDataSetChanged()
+        return gson.fromJson<Character>(json, Character::class.java)
     }
 
     fun handleStatClick(position: Int, view: View) {
+        var list = character.stats
+        if (!onStatsTab) {
+            list = character.attributes
+        }
         if (editting) {
             val editDialog = AlertDialog.Builder(view.context)
-            editDialog.setView(layoutInflater.inflate(com.bascomC.bwcharacter.R.layout.skill_layout, null))
+            editDialog.setView(layoutInflater.inflate(R.layout.skill_layout, null))
             val customDialog = editDialog.create()
             customDialog.show()
-            customDialog.edit_exp.text = character.stats[position].mExponent.toString()
-            customDialog.edit_name.setText(character.stats[position].mName, TextView.BufferType.EDITABLE)
+            customDialog.edit_exp.text = list[position].mExponent.toString()
+            customDialog.edit_name.setText(list[position].mName, TextView.BufferType.EDITABLE)
             customDialog.editSkillDeleteButton.visibility = View.GONE
             customDialog.inc.setOnClickListener {
                 var newExp = 0
-                if (character.stats[position].mExponent < 10) {
-                    newExp = ++character.stats[position].mExponent
-                    andyr.bascomC.bwcharacter.CharacterManager.Companion.instance.saveCharacter()
+                if (list[position].mExponent < 10) {
+                    newExp = ++list[position].mExponent
+                    if (onStatsTab) {
+                        character.stats = list
+                    } else {
+                        character.attributes = list
+                    }
+                    CharacterManager.instance.saveCharacter()
                     customDialog.edit_exp.text = newExp.toString()
                 } else {
                     Toast.makeText(view.context, "Cannot Set Exponent greater than 10", Toast.LENGTH_SHORT).show()
@@ -140,17 +228,27 @@ class StatsActivity : andyr.bascomC.bwcharacter.BaseActivity() {
             }
             customDialog.dec.setOnClickListener {
                 var newExp = 0
-                if (character.stats[position].mExponent > 0) {
-                    newExp = --character.stats[position].mExponent
-                    andyr.bascomC.bwcharacter.CharacterManager.Companion.instance.saveCharacter()
+                if (list[position].mExponent > 0) {
+                    newExp = --list[position].mExponent
+                    if (onStatsTab) {
+                        character.stats = list
+                    } else {
+                        character.attributes = list
+                    }
+                    CharacterManager.instance.saveCharacter()
                     customDialog.edit_exp.text = newExp.toString()
                 } else {
                     Toast.makeText(view.context, "Cannot Set Exponent less than 0", Toast.LENGTH_SHORT).show()
                 }
             }
             customDialog.editSkillSaveButton.setOnClickListener {
-                character.stats[position].mName = customDialog.edit_name.text.toString()
-                andyr.bascomC.bwcharacter.CharacterManager.Companion.instance.saveCharacter()
+                list[position].mName = customDialog.edit_name.text.toString()
+                if (onStatsTab) {
+                    character.stats = list
+                } else {
+                    character.attributes = list
+                }
+                CharacterManager.instance.saveCharacter()
                 statsRecyclerView.adapter?.notifyItemChanged(position)
                 customDialog.dismiss()
             }
@@ -161,9 +259,14 @@ class StatsActivity : andyr.bascomC.bwcharacter.BaseActivity() {
             customDialog.show()
             customDialog.routineButton.visibility = View.GONE
             customDialog.difficultButton.setOnClickListener {
-                if (canTest(character.stats[position].mTests, TEST_TYPE[1])) {
-                    character.stats[position].mTests += 10
-                    andyr.bascomC.bwcharacter.CharacterManager.Companion.instance.saveCharacter()
+                if (canTest(list[position].mTests, TEST_TYPE[1])) {
+                    list[position].mTests += 10
+                    if (onStatsTab) {
+                        character.stats = list
+                    } else {
+                        character.attributes = list
+                    }
+                    CharacterManager.instance.saveCharacter()
                     statsRecyclerView.adapter?.notifyItemChanged(position)
                 } else {
                     Toast.makeText(view.context, "Cannot make Difficult Test", Toast.LENGTH_SHORT).show()
@@ -171,9 +274,14 @@ class StatsActivity : andyr.bascomC.bwcharacter.BaseActivity() {
                 customDialog.dismiss()
             }
             customDialog.challengingButton.setOnClickListener {
-                if (canTest(character.stats[position].mTests, TEST_TYPE[2])) {
-                    character.stats[position].mTests += 1
-                    andyr.bascomC.bwcharacter.CharacterManager.Companion.instance.saveCharacter()
+                if (canTest(list[position].mTests, TEST_TYPE[2])) {
+                    list[position].mTests += 1
+                    if (onStatsTab) {
+                        character.stats = list
+                    } else {
+                        character.attributes = list
+                    }
+                    CharacterManager.instance.saveCharacter()
                     statsRecyclerView.adapter?.notifyItemChanged(position)
                 } else {
                     Toast.makeText(view.context, "Cannot make Challenging Test", Toast.LENGTH_SHORT).show()
@@ -182,7 +290,7 @@ class StatsActivity : andyr.bascomC.bwcharacter.BaseActivity() {
             }
         } else if (view.id == fpdButton.id) {
         } else {
-            showSkillDescription(character.stats[position].mName, view.context)
+            showSkillDescription(list[position].mName, view.context)
         }
     }
 
@@ -207,6 +315,18 @@ class StatsActivity : andyr.bascomC.bwcharacter.BaseActivity() {
             setEditting(true)
         }
 //        Toast.makeText(view.context, "Entering Editting Mode", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun setList(list: ArrayList<Skill>) {statsRecyclerView.adapter = ListAdapter(list as ArrayList<SkillObject>,this,
+        object : ClickListener {
+            override fun onPositionClicked(position: Int, view: View) {
+                handleStatClick(position, view)
+            }
+
+            override fun onLongClicked(position: Int, view: View) {
+                handleLongStatClick(position, view)
+            }
+        })
     }
 
     private fun setEditting(setEdit: Boolean) {

@@ -3,9 +3,10 @@ package andyr.bascomC.bwcharacter
 import com.bascomC.andyr.bwcharacter.Skill
 
 class Character {
-    var stats : ArrayList<Skill> = arrayListOf(Skill("Power"), Skill("Will"), Skill("Perception"), Skill("Agility"), Skill("Forte"), Skill("Speed"))
-    var attributes : ArrayList<Skill> = arrayListOf(Skill("Health"), Skill("Steel"), Skill("Circles"), Skill("Resources"))
+    var stats : ArrayList<Skill> = arrayListOf(Skill("Will"), Skill("Power"), Skill("Agility"), Skill("Perception"), Skill("Forte"), Skill("Speed"))
+    var attributes : ArrayList<Skill> = arrayListOf(Skill("Health"), Skill("Steel"), Skill("Reflexes"), Skill("Mortal Wound"), Skill("Circles"), Skill("Resources"))
     var skills : ArrayList<Skill> = arrayListOf()
+    var learning : ArrayList<Skill> = arrayListOf()
     var notes : ArrayList<String> = arrayListOf()
     var artha : ArrayList<Int> = arrayListOf(0, 0, 0)
     var beliefs : ArrayList<String> = arrayListOf("", "", "")

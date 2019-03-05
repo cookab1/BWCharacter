@@ -113,32 +113,32 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/header"
                 app:layout_constraintBottom_toTopOf="@+id/skillsEdittingBanner"
-                android:padding="16dp" app:layout_constraintEnd_toEndOf="parent"
+                android:padding="16dp" app:layout_constraintEnd_toStartOf="@+id/skillsButton"
         >
 
         </com.aitsuki.swipe.SwipeMenuRecyclerView>
-        <!--<Button-->
-                <!--android:text="@string/skills"-->
-                <!--android:layout_width="28dp"-->
-                <!--android:layout_height="0dp"-->
-                <!--android:id="@+id/skillsButton"-->
-                <!--android:paddingRight="10dp"-->
-                <!--android:paddingLeft="8dp"-->
-                <!--app:layout_constraintEnd_toEndOf="parent"-->
-                <!--app:layout_constraintTop_toBottomOf="@+id/toolbar"-->
-                <!--app:layout_constraintBottom_toTopOf="@+id/learningButton"-->
-                <!--android:background="@drawable/side_tab_button"-->
-        <!--/>-->
-        <!--<Button-->
-                <!--android:text="@string/learning"-->
-                <!--android:layout_width="28dp"-->
-                <!--android:layout_height="0dp"-->
-                <!--android:id="@+id/learningButton"-->
-                <!--android:paddingRight="10dp"-->
-                <!--android:paddingLeft="8dp"-->
-                <!--app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"-->
-                <!--app:layout_constraintTop_toBottomOf="@+id/skillsButton" android:layout_marginBottom="32dp"-->
-                <!--android:background="@drawable/side_tab_button"/>-->
+
+        <Button
+                android:text="@string/skills"
+                android:layout_width="28dp"
+                android:layout_height="0dp"
+                android:id="@+id/skillsButton"
+                android:paddingRight="10dp"
+                android:paddingLeft="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/toolbar"
+                app:layout_constraintBottom_toTopOf="@+id/learningButton"
+                android:background="@drawable/side_tab_button"/>
+        <Button
+                android:text="@string/learning"
+                android:layout_width="28dp"
+                android:layout_height="0dp"
+                android:id="@+id/learningButton"
+                android:paddingRight="10dp"
+                android:paddingLeft="8dp"
+                app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/skillsButton" android:layout_marginBottom="32dp"
+                android:background="@drawable/side_tab_button"/>
 
     </android.support.constraint.ConstraintLayout>
 

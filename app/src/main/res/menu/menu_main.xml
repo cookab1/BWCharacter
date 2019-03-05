@@ -11,7 +11,7 @@
           <!--android:title="@string/action_settings"-->
           <!--app:showAsAction="never"/>-->
 
-    <item android:id="@+id/action_initialize"
+    <item
           android:title="@string/initialization_process"
           app:showAsAction="never">
 
@@ -21,10 +21,10 @@
                   android:title="@string/whole_initialization"/>
             <item android:id="@+id/redoStats"
                   android:title="@string/stats"/>
+            <item android:id="@+id/redoAttributes"
+                  android:title="@string/attributes"/>
             <item android:id="@+id/redoSkills"
                   android:title="@string/skills"/>
-            <item android:id="@+id/redoNotes"
-                  android:title="@string/notes"/>
 
         </menu>
 

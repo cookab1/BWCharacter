@@ -11,7 +11,7 @@ import com.bascomC.andyr.bwcharacter.Skill
 import java.lang.ref.WeakReference
 
 
-class ListAdapter(var list: ArrayList<Skill>, parentContext: Context, clickListener: andyr.bascomC.bwcharacter.ClickListener): RecyclerView.Adapter<andyr.bascomC.bwcharacter.ListAdapter.StatViewHolder>() {
+class ListAdapter(var list: ArrayList<SkillObject>, parentContext: Context, clickListener: andyr.bascomC.bwcharacter.ClickListener): RecyclerView.Adapter<andyr.bascomC.bwcharacter.ListAdapter.StatViewHolder>() {
 
     val context = parentContext
     val listener = clickListener
@@ -59,7 +59,7 @@ class ListAdapter(var list: ArrayList<Skill>, parentContext: Context, clickListe
             }
         }
 
-        fun bindStat(stat: Skill, context: Context) {
+        fun bindStat(stat: SkillObject, context: Context) {
             if (tests != null) {
                 statName.text = stat.mName
                 statExp.text = stat.mExponent.toString()

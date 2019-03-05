@@ -30,7 +30,8 @@ class SkillDescriptionsActivity : andyr.bascomC.bwcharacter.BaseActivity() {
 
         returnToCharacter.setOnClickListener{
             val intent = Intent(this, andyr.bascomC.bwcharacter.StatsActivity::class.java)
-            startActivity(intent) }
+            startActivity(intent)
+        }
 
         skillSearchBar.showSoftInputOnFocus
         searchButton.setOnClickListener {

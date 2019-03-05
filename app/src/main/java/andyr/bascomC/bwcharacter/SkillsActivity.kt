@@ -11,6 +11,7 @@ import android.widget.TextView
 import android.widget.Toast
 import com.bascomC.andyr.bwcharacter.Skill
 import andyr.bascomC.bwcharacter.Utilities.TEST_TYPE
+import com.bascomC.bwcharacter.R
 import kotlinx.android.synthetic.main.activity_skills.*
 import kotlinx.android.synthetic.main.skill_layout.*
 import kotlinx.android.synthetic.main.skill_list_item.*
@@ -21,35 +22,25 @@ class SkillsActivity: andyr.bascomC.bwcharacter.BaseActivity() {
     private val TAG = "SkillsActivity_Logging"
     private lateinit var character: andyr.bascomC.bwcharacter.Character
     private var editting = false
+    private var onSkillsTab = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(com.bascomC.bwcharacter.R.layout.activity_skills)
 
-        character = andyr.bascomC.bwcharacter.CharacterManager.Companion.instance.getCharacter()
+        character = CharacterManager.instance.getCharacter()
 
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
-        if (character.skills.size == 0) {
+        if (character.skills.isEmpty()) {
             setEditting(true)
         } else {
             setEditting(editting)
         }
 
         skillsRecyclerView.layoutManager = LinearLayoutManager(this)
-        skillsRecyclerView.adapter = andyr.bascomC.bwcharacter.ListAdapter(
-            character.skills,
-            this,
-            object : andyr.bascomC.bwcharacter.ClickListener {
-                override fun onPositionClicked(position: Int, view: View) {
-                    handleSkillClick(position, view)
-                }
-
-                override fun onLongClicked(position: Int, view: View) {
-                    handleLongSkillClick(position, view)
-                }
-            })
+        setList(character.skills)
 
         //Button Listeners
         stats2.setOnClickListener {
@@ -65,6 +56,24 @@ class SkillsActivity: andyr.bascomC.bwcharacter.BaseActivity() {
         }
 
         skillsEdittingSaveButton.setOnClickListener { setEditting(false) }
+        skillsButton.setOnClickListener {
+            if(!onSkillsTab) {
+                onSkillsTab = true
+                if(character.skills.isEmpty()) {
+                    setEditting(true)
+                }
+                setList(character.skills)
+            }
+        }
+        learningButton.setOnClickListener {
+            if(onSkillsTab) {
+                onSkillsTab = false
+                if(character.learning.isEmpty()) {
+                    setEditting(true)
+                }
+                setList(character.learning as ArrayList<Skill>)
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -90,7 +99,7 @@ class SkillsActivity: andyr.bascomC.bwcharacter.BaseActivity() {
 
         //Create Skill Dialogue
         val editDialog = AlertDialog.Builder(this)
-        editDialog.setView(layoutInflater.inflate(com.bascomC.bwcharacter.R.layout.skill_layout, null))
+        editDialog.setView(layoutInflater.inflate(R.layout.skill_layout, null))
         val customDialog = editDialog.create()
         customDialog.show()
         customDialog.edit_exp.text = newExponent.toString()
@@ -112,29 +121,43 @@ class SkillsActivity: andyr.bascomC.bwcharacter.BaseActivity() {
             }
         }
         customDialog.editSkillSaveButton.setOnClickListener {
-            character.skills.add(position, Skill(customDialog.edit_name.text.toString(), newExponent))
-            andyr.bascomC.bwcharacter.CharacterManager.Companion.instance.saveCharacter()
+            if (onSkillsTab) {
+                character.skills.add(position, Skill(customDialog.edit_name.text.toString(), newExponent))
+            } else {
+                character.learning.add(position, Skill(customDialog.edit_name.text.toString(), newExponent))
+            }
+            CharacterManager.instance.saveCharacter()
             skillsRecyclerView.adapter?.notifyDataSetChanged()
             customDialog.dismiss()
         }
     }
 
     fun handleSkillClick(position: Int, view: View) {
+        var list = character.skills
+        if (!onSkillsTab) {
+            list = character.learning
+        }
+        
         if (editting) {
-            if (position == character.skills.size - 1) {
+            if (position == list.size - 1) {
                 addSkill(position)
             } else {
                 val editDialog = AlertDialog.Builder(view.context)
                 editDialog.setView(layoutInflater.inflate(com.bascomC.bwcharacter.R.layout.skill_layout, null))
                 val customDialog = editDialog.create()
                 customDialog.show()
-                customDialog.edit_exp.text = character.skills[position].mExponent.toString()
-                customDialog.edit_name.setText(character.skills[position].mName, TextView.BufferType.EDITABLE)
+                customDialog.edit_exp.text = list[position].mExponent.toString()
+                customDialog.edit_name.setText(list[position].mName, TextView.BufferType.EDITABLE)
                 customDialog.inc.setOnClickListener {
                     var newExp = 0
-                    if (character.skills[position].mExponent < 10) {
-                        newExp = ++character.skills[position].mExponent
-                        andyr.bascomC.bwcharacter.CharacterManager.Companion.instance.saveCharacter()
+                    if (list[position].mExponent < 10) {
+                        newExp = ++list[position].mExponent
+                        if (onSkillsTab) {
+                            character.skills = list
+                        } else {
+                            character.learning = list
+                        }
+                        andyr.bascomC.bwcharacter.CharacterManager.instance.saveCharacter()
                         customDialog.edit_exp.text = newExp.toString()
                     } else {
                         Toast.makeText(view.context, "Cannot Set Exponent greater than 10", Toast.LENGTH_SHORT).show()
@@ -142,22 +165,38 @@ class SkillsActivity: andyr.bascomC.bwcharacter.BaseActivity() {
                 }
                 customDialog.dec.setOnClickListener {
                     var newExp = 0
-                    if (character.skills[position].mExponent > 0) {
-                        newExp = --character.skills[position].mExponent
-                        andyr.bascomC.bwcharacter.CharacterManager.Companion.instance.saveCharacter()
+                    if (list[position].mExponent > 0) {
+                        newExp = --list[position].mExponent
+                        if (onSkillsTab) {
+                            character.skills = list
+                        } else {
+                            character.learning = list
+                        }
+                        andyr.bascomC.bwcharacter.CharacterManager.instance.saveCharacter()
                         customDialog.edit_exp.text = newExp.toString()
                     } else {
                         Toast.makeText(view.context, "Cannot Set Exponent less than 0", Toast.LENGTH_SHORT).show()
                     }
                 }
                 customDialog.editSkillDeleteButton.setOnClickListener {
-                    character.skills.removeAt(position)
-                    andyr.bascomC.bwcharacter.CharacterManager.Companion.instance.saveCharacter()
+                    list.removeAt(position)
+                    if (onSkillsTab) {
+                        character.skills = list
+                    } else {
+                        character.learning = list
+                    }
+                    andyr.bascomC.bwcharacter.CharacterManager.instance.saveCharacter()
                     skillsRecyclerView.adapter?.notifyDataSetChanged()
+                    customDialog.dismiss()
                 }
                 customDialog.editSkillSaveButton.setOnClickListener {
-                    character.skills[position].mName = customDialog.edit_name.text.toString()
-                    andyr.bascomC.bwcharacter.CharacterManager.Companion.instance.saveCharacter()
+                    list[position].mName = customDialog.edit_name.text.toString()
+                    if (onSkillsTab) {
+                        character.skills = list
+                    } else {
+                        character.learning = list
+                    }
+                    andyr.bascomC.bwcharacter.CharacterManager.instance.saveCharacter()
                     skillsRecyclerView.adapter?.notifyItemChanged(position)
                     customDialog.dismiss()
                 }
@@ -168,9 +207,14 @@ class SkillsActivity: andyr.bascomC.bwcharacter.BaseActivity() {
             val customDialog = testDialog.create()
             customDialog.show()
             customDialog.routineButton.setOnClickListener {
-                if (canTest(character.skills[position].mTests, TEST_TYPE[0])) {
-                    character.skills[position].mTests += 100
-                    andyr.bascomC.bwcharacter.CharacterManager.Companion.instance.saveCharacter()
+                if (canTest(list[position].mTests, TEST_TYPE[0])) {
+                    list[position].mTests += 100
+                    if (onSkillsTab) {
+                        character.skills = list
+                    } else {
+                        character.learning = list
+                    }
+                    andyr.bascomC.bwcharacter.CharacterManager.instance.saveCharacter()
                     skillsRecyclerView.adapter?.notifyItemChanged(position)
                 } else {
                     Toast.makeText(view.context, "Cannot make Routine Test", Toast.LENGTH_SHORT).show()
@@ -178,9 +222,14 @@ class SkillsActivity: andyr.bascomC.bwcharacter.BaseActivity() {
                 customDialog.dismiss()
             }
             customDialog.difficultButton.setOnClickListener {
-                if (canTest(character.skills[position].mTests, TEST_TYPE[1])) {
-                    character.skills[position].mTests += 10
-                    andyr.bascomC.bwcharacter.CharacterManager.Companion.instance.saveCharacter()
+                if (canTest(list[position].mTests, TEST_TYPE[1])) {
+                    list[position].mTests += 10
+                    if (onSkillsTab) {
+                        character.skills = list
+                    } else {
+                        character.learning = list
+                    }
+                    andyr.bascomC.bwcharacter.CharacterManager.instance.saveCharacter()
                     skillsRecyclerView.adapter?.notifyItemChanged(position)
                 } else {
                     Toast.makeText(view.context, "Cannot make Difficult Test", Toast.LENGTH_SHORT).show()
@@ -188,9 +237,14 @@ class SkillsActivity: andyr.bascomC.bwcharacter.BaseActivity() {
                 customDialog.dismiss()
             }
             customDialog.challengingButton.setOnClickListener {
-                if (canTest(character.skills[position].mTests, TEST_TYPE[2])) {
-                    character.skills[position].mTests += 1
-                    andyr.bascomC.bwcharacter.CharacterManager.Companion.instance.saveCharacter()
+                if (canTest(list[position].mTests, TEST_TYPE[2])) {
+                    list[position].mTests += 1
+                    if (onSkillsTab) {
+                        character.skills = list
+                    } else {
+                        character.learning = list
+                    }
+                    andyr.bascomC.bwcharacter.CharacterManager.instance.saveCharacter()
                     skillsRecyclerView.adapter?.notifyItemChanged(position)
                 } else {
                     Toast.makeText(view.context, "Cannot make Challenging Test", Toast.LENGTH_SHORT).show()
@@ -199,7 +253,7 @@ class SkillsActivity: andyr.bascomC.bwcharacter.BaseActivity() {
             }
         } else if (view.id == fpdButton.id) {
         } else {
-            showSkillDescription(character.skills[position].mName, view.context)
+            showSkillDescription(list[position].mName, view.context)
         }
     }
 
@@ -234,18 +288,18 @@ class SkillsActivity: andyr.bascomC.bwcharacter.BaseActivity() {
             confirmDialog.show()
             confirmDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
                 character.skills.removeAt(position)
-                andyr.bascomC.bwcharacter.CharacterManager.Companion.instance.saveCharacter()
+                andyr.bascomC.bwcharacter.CharacterManager.instance.saveCharacter()
                 skillsRecyclerView.adapter?.notifyDataSetChanged()
                 confirmDialog.dismiss()
             }
         }
-//        Toast.makeText(view.context, "Entering Editting Mode", Toast.LENGTH_SHORT).show()
     }
 
     private fun setEditting(setEdit : Boolean) {
         val skillsSize = character.skills.size
         if (setEdit) {
             character.skills.add(Skill("AddItem", -1, 1))
+            character.learning.add(Skill("AddItem", -1, 1))
             skillsRecyclerView.adapter?.notifyDataSetChanged()
             skillsEdittingBanner.visibility = View.VISIBLE
             editting = setEdit
@@ -254,11 +308,27 @@ class SkillsActivity: andyr.bascomC.bwcharacter.BaseActivity() {
             if (viewType == 1 && skillsSize > 1) {
 //            cleanSkills()
                 character.skills.removeAt(character.skills.size - 1)
+                character.learning.removeAt(character.learning.size - 1)
                 skillsRecyclerView.adapter?.notifyDataSetChanged()
                 skillsEdittingBanner.visibility = View.GONE
                 editting = setEdit
             }
         }
+    }
+
+    private fun setList(list: ArrayList<Skill>) {
+        skillsRecyclerView.adapter = ListAdapter(
+            list as ArrayList<SkillObject>,
+            this,
+            object : andyr.bascomC.bwcharacter.ClickListener {
+                override fun onPositionClicked(position: Int, view: View) {
+                    handleSkillClick(position, view)
+                }
+
+                override fun onLongClicked(position: Int, view: View) {
+                    handleLongSkillClick(position, view)
+                }
+            })
     }
 
 //    private fun cleanSkills() {
