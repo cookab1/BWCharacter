@@ -8,8 +8,10 @@ import android.text.Html
 import android.text.SpannableString
 import android.text.style.UnderlineSpan
 import android.util.Log
+import android.widget.Toast
 import andyr.bascomC.bwcharacter.Utilities.*
 import kotlinx.android.synthetic.main.skill_description_list_item.*
+import java.nio.charset.CharacterCodingException
 
 
 open class BaseActivity : AppCompatActivity() {
@@ -71,6 +73,34 @@ open class BaseActivity : AppCompatActivity() {
             testDialog.setMessage("This will be the description of $name straight from the book!")
             testDialog.create().show()
         }
+    }
+
+    fun calculateAptitude(skillName: String): Int {
+        var character = CharacterManager.instance.getCharacter()
+        var description = DESCRIPTIONS[skillName]
+        if (description != null) {
+            var root = description.root
+            var rootInt = ROOT_TO_Int[root]
+            if (rootInt != null && rootInt > 9) {
+                //take the average of the two roots and round down.
+                var exp1 = character.stats[rootInt % 10].mExponent
+                var exp2 = character.stats[rootInt / 10].mExponent
+                var expAverage = (exp1 + exp2) / 2
+                if (((exp1 + exp2) % 2) != 0) {
+                    //the book calls for rounding down.
+                    expAverage - 1
+                }
+                return 10 - expAverage
+            } else if (rootInt != null && rootInt <= 9) {
+                var exp = character.stats[rootInt].mExponent
+                return 10 - exp
+            } else {
+                //rootInt was not found
+                return -1
+            }
+        }
+        //description was not found
+        return -2
     }
 
     private fun compileDescription(skill: Descriptions, context: Context) : String {

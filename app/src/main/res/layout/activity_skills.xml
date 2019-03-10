@@ -35,7 +35,7 @@
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             android:background="@drawable/nav_button_selected"/>
     <Button
-            android:text="@string/notes"
+            android:text="@string/gear_notes"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/notes2"
@@ -76,6 +76,30 @@
 
         </android.support.v7.widget.Toolbar>
 
+        <ImageButton
+                android:layout_width="56dp"
+                android:layout_height="0dp"
+                android:id="@+id/infoToggleButton"
+                app:layout_constraintStart_toStartOf="@id/toolbar"
+                app:layout_constraintTop_toTopOf="@id/toolbar" android:src="@drawable/folder"
+                android:background="@android:color/transparent"
+                app:layout_constraintBottom_toBottomOf="@+id/toolbar"/>
+
+        <ImageView
+                android:layout_width="0dp"
+                android:layout_height="26dp" app:srcCompat="@drawable/header_being_learned"
+                android:id="@+id/headerBeingLearned"
+                app:layout_constraintTop_toBottomOf="@+id/header" app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="8dp" android:layout_marginRight="8dp"
+                app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp" android:visibility="gone"/>
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="26dp" app:srcCompat="@drawable/header_aptitude"
+                android:id="@+id/headerAptitude"
+                app:layout_constraintTop_toBottomOf="@+id/headerBeingLearned" android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
         <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="32dp"
@@ -111,10 +135,9 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/header"
                 app:layout_constraintBottom_toTopOf="@+id/skillsEdittingBanner"
                 android:padding="16dp" app:layout_constraintEnd_toStartOf="@+id/skillsButton"
-        >
+                app:layout_constraintTop_toBottomOf="@+id/headerAptitude">
 
         </com.aitsuki.swipe.SwipeMenuRecyclerView>
 
@@ -126,9 +149,9 @@
                 android:paddingRight="10dp"
                 android:paddingLeft="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/toolbar"
                 app:layout_constraintBottom_toTopOf="@+id/learningButton"
-                android:background="@drawable/side_tab_button"/>
+                android:background="@drawable/side_tab_button"
+                android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/headerAptitude"/>
         <Button
                 android:text="@string/learning"
                 android:layout_width="28dp"

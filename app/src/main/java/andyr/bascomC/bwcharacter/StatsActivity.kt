@@ -1,8 +1,11 @@
 package andyr.bascomC.bwcharacter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.support.annotation.RequiresApi
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
@@ -27,6 +30,8 @@ class StatsActivity : BaseActivity() {
     private var firstTimeUser = false
     private var onStatsTab = true
 
+    @SuppressLint("NewApi")
+    @RequiresApi(Build.VERSION_CODES.JELLY_BEAN)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(com.bascomC.bwcharacter.R.layout.activity_stats)
@@ -35,8 +40,8 @@ class StatsActivity : BaseActivity() {
         CharacterManager.instance.setPrefsEditor()
 
         //reset preferences to original character
-//        character = CharacterManager.instance.getCharacter()
-//        CharacterManager.instance.saveCharacter()
+        character = CharacterManager.instance.getCharacter()
+        CharacterManager.instance.saveCharacter()
 
         character = loadCharacter()
         CharacterManager.instance.setCharacter(character)
@@ -69,14 +74,24 @@ class StatsActivity : BaseActivity() {
             startActivity(intent)
         }
 
+        infoToggleButton.setOnClickListener {
+            val intent = Intent(this, BeliefsInstinctsActivity::class.java)
+            startActivity(intent)
+        }
+
         statsEdittingSaveButton.setOnClickListener { setEditting(false) }
+
         statsButton.setOnClickListener {
+            headerStats.visibility = View.VISIBLE
+            headerAttributes.visibility = View.INVISIBLE
             if(!onStatsTab) {
                 onStatsTab = true
                 setList(character.stats)
             }
         }
         attributesButton.setOnClickListener {
+            headerStats.visibility = View.INVISIBLE
+            headerAttributes.visibility = View.VISIBLE
             if(onStatsTab) {
                 onStatsTab = false
                 setList(character.attributes)
@@ -95,6 +110,12 @@ class StatsActivity : BaseActivity() {
             R.id.action_descriptions -> {
                 val intent = Intent(this, SkillDescriptionsActivity::class.java)
                 startActivity(intent)
+                true
+            }
+            R.id.action_pro_tips -> {
+                val viewDialog = AlertDialog.Builder(this)
+                viewDialog.setView(R.layout.help_dialogue)
+                viewDialog.create().show()
                 true
             }
             R.id.redo -> {
@@ -116,7 +137,6 @@ class StatsActivity : BaseActivity() {
                     }
                     character.skills.clear()
                     character.learning.clear()
-                    character.notes.clear()
                     val intent = Intent(this, InitializationActivity::class.java)
                     startActivity(intent)
                     customDialog.dismiss()
@@ -136,8 +156,11 @@ class StatsActivity : BaseActivity() {
                         it.mExponent = 0
                         it.mTests = 0
                     }
-                    initializer.initializeStats(0, layoutInflater, this)
-                    statsRecyclerView.adapter?.notifyDataSetChanged()
+                    initializer.initializeStats(0, layoutInflater, this) {
+                        if (onStatsTab) {
+                            statsRecyclerView.adapter?.notifyDataSetChanged()
+                        }
+                    }
                     customDialog.dismiss()
                 }
                 true
@@ -155,8 +178,11 @@ class StatsActivity : BaseActivity() {
                         it.mExponent = 0
                         it.mTests = 0
                     }
-                    initializer.initializeAttributes(0, layoutInflater, this)
-                    statsRecyclerView.adapter?.notifyDataSetChanged()
+                    initializer.initializeAttributes(0, layoutInflater, this) {
+                        if (!onStatsTab) {
+                            statsRecyclerView.adapter?.notifyDataSetChanged()
+                        }
+                    }
                     customDialog.dismiss()
                 }
                 true
@@ -172,7 +198,7 @@ class StatsActivity : BaseActivity() {
                 customDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
                     character.skills.clear()
                     character.learning.clear()
-                    initializer.initializeSkills(layoutInflater, this)
+                    initializer.initializeSkills(layoutInflater, this) {}
                     statsRecyclerView.adapter?.notifyDataSetChanged()
                     customDialog.dismiss()
                 }
@@ -211,9 +237,14 @@ class StatsActivity : BaseActivity() {
             customDialog.edit_exp.text = list[position].mExponent.toString()
             customDialog.edit_name.setText(list[position].mName, TextView.BufferType.EDITABLE)
             customDialog.editSkillDeleteButton.visibility = View.GONE
+            customDialog.edit_name.isEnabled = false
             customDialog.inc.setOnClickListener {
                 var newExp = 0
-                if (list[position].mExponent < 10) {
+                var maxExp = 10
+                if (list[position].mName == "Mortal Wound") {
+                    maxExp = 16
+                }
+                if (list[position].mExponent < maxExp) {
                     newExp = ++list[position].mExponent
                     if (onStatsTab) {
                         character.stats = list

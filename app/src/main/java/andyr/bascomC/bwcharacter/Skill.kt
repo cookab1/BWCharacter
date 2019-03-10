@@ -32,7 +32,7 @@ class Skill(mName: String, mExponent: Int = 0, viewType: Int = 0, mShade: Int = 
     410 to R.drawable.test410, 411 to R.drawable.test411, 412 to R.drawable.test412, 413 to R.drawable.test413,
     420 to R.drawable.test420, 421 to R.drawable.test421, 422 to R.drawable.test422, 423 to R.drawable.test423,
     430 to R.drawable.test430, 431 to R.drawable.test431, 432 to R.drawable.test432, 433 to R.drawable.test433,
-    440 to R.drawable.test440, 441 to R.drawable.test441, 442 to R.drawable.test442, 443 to R.drawable.test443), mExponent, viewType, mShade, mTests) {
+    440 to R.drawable.test440, 441 to R.drawable.test441, 442 to R.drawable.test442, 443 to R.drawable.test443), mExponent, viewType, mShade, mTests, false) {
     private val requiredTests: Array<IntArray> = arrayOf(
         intArrayOf(0), intArrayOf(110, 101), intArrayOf(210, 201), intArrayOf(320, 301), intArrayOf(420, 401),
         intArrayOf(31), intArrayOf(32), intArrayOf(42), intArrayOf(43), intArrayOf(53))

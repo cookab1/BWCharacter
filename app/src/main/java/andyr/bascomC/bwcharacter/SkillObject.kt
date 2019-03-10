@@ -1,6 +1,6 @@
 package andyr.bascomC.bwcharacter
 
-open class SkillObject(var mName : String, var testsToImage : Map<Int, Int>, var mExponent: Int, var viewType: Int, var mShade: Int, var mTests: Int) {
+open class SkillObject(var mName : String, var testsToImage : Map<Int, Int>, var mExponent: Int, var viewType: Int, var mShade: Int, var mTests: Int, var isLearning: Boolean) {
 
     //Helper functions
     open fun getTestsImage(tests: Int): Int {

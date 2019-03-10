@@ -1,16 +1,5 @@
 package andyr.bascomC.bwcharacter.Utilities
 
-import andyr.bascomC.bwcharacter.Descriptions
-
-const val EXTRA_CHARACTER = "character"
-
-val STAT_NAME = listOf("Will", "Power", "Agility", "Perception", "Forte", "Speed")
-val ATTRIBUTE_NAME = listOf("Health", "Steel", "Reflexes", "Mortal Wound", "Circles", "Resources")
-val TEST_TYPE = listOf("Routine", "Difficult", "Challenging")
-val TRAIT_TYPE = listOf("Char", "DT", "Call-On")
-val RELATIONSHIP_TYPE = listOf("Relationships", "Circles", "Named Circles", "Enemy Circles")
-val INJURYS = listOf("", "SU", "LI", "MI", "SE", "TR", "MO")
-
 private const val wiseDescription: String = "A wise is a skill through which a character can call upon the knowledge of various details of the game world--knowledge of \"who's who\" or \"what's what\" for the areas encompassed by his wises. For the most part, wises are fairly self-explanatory--their name says it all."
 private const val perception = "Perception"
 private const val will = "Will"
@@ -25,6 +14,16 @@ private const val will_per = "Will/Per"
 private const val power_agility = "Power/Agility"
 private const val will_power = "Will/Power"
 private const val power_speed = "Power/Speed"
+
+const val EXTRA_CHARACTER = "character"
+
+val STAT_NAME = listOf("Will", "Power", "Agility", "Perception", "Forte", "Speed")
+val ATTRIBUTE_NAME = listOf("Health", "Steel", "Reflexes", "Mortal Wound", "Circles", "Resources")
+val TEST_TYPE = listOf("Routine", "Difficult", "Challenging")
+val TRAIT_TYPE = listOf("Char", "DT", "Call-On")
+val RELATIONSHIP_TYPE = listOf("Relationships", "Circles", "Named Circles", "Enemy Circles")
+val INJURYS = listOf("", "SU", "LI", "MI", "SE", "TR", "MO")
+val ROOT_TO_Int = mapOf(will to 0, power to 1, agility to 2, perception to 3, forte to 4, speed to 5, per_agi to 32, per_power to 31, will_per to 30, will_agility to 20, will_power to 10, power_speed to 15, power_agility to 12)
 
 const val OBSTACLES = "Obstacles"
 const val FORKS = "FoRKs"

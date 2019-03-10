@@ -16,8 +16,9 @@ import kotlinx.android.synthetic.main.skill_initialization_dialogue.*
 class Initializer(var character: Character, var statIteration: Int = 0, var attributeIteration: Int = 0) {
 
 
-    fun initializeStats(iteration: Int, inflater: LayoutInflater, context: Context) {
+    fun initializeStats(iteration: Int, inflater: LayoutInflater, context: Context, callback: () -> Unit) {
         if(iteration > 5 || iteration < 0) {
+            callback()
             return
         }
         statIteration = iteration
@@ -25,6 +26,7 @@ class Initializer(var character: Character, var statIteration: Int = 0, var attr
 
         val testDialog = AlertDialog.Builder(context)
         testDialog.setView(inflater.inflate(R.layout.skill_initialization_dialogue, null))
+        testDialog.setCancelable(false)
         val customDialog = testDialog.create()
         customDialog.show()
         customDialog.skillName.setText(STAT_NAME[iteration], TextView.BufferType.EDITABLE)
@@ -51,17 +53,18 @@ class Initializer(var character: Character, var statIteration: Int = 0, var attr
         customDialog.prevButton.setOnClickListener {
             CharacterManager.instance.saveCharacter()
             customDialog.dismiss()
-            initializeStats(iteration - 1, inflater, context)
+            initializeStats(iteration - 1, inflater, context, callback)
         }
         customDialog.nextButton.setOnClickListener {
             CharacterManager.instance.saveCharacter()
             customDialog.dismiss()
-            initializeStats(iteration + 1, inflater, context)
+            initializeStats(iteration + 1, inflater, context, callback)
         }
     }
 
-    fun initializeAttributes(iteration: Int, inflater: LayoutInflater, context: Context) {
+    fun initializeAttributes(iteration: Int, inflater: LayoutInflater, context: Context, callback: () -> Unit) {
         if(iteration > 5 || iteration < 0) {
+            callback()
             return
         }
         attributeIteration = iteration
@@ -69,6 +72,7 @@ class Initializer(var character: Character, var statIteration: Int = 0, var attr
 
         val testDialog = AlertDialog.Builder(context)
         testDialog.setView(inflater.inflate(R.layout.skill_initialization_dialogue, null))
+        testDialog.setCancelable(false)
         val customDialog = testDialog.create()
         customDialog.show()
         customDialog.skillName.setText(ATTRIBUTE_NAME[iteration], TextView.BufferType.EDITABLE)
@@ -96,32 +100,36 @@ class Initializer(var character: Character, var statIteration: Int = 0, var attr
             character.attributes[iteration].mExponent = newExponent
             CharacterManager.instance.saveCharacter()
             customDialog.dismiss()
-            initializeAttributes(iteration - 1, inflater, context)
+            initializeAttributes(iteration - 1, inflater, context, callback)
         }
         customDialog.nextButton.setOnClickListener {
             character.attributes[iteration].mExponent = newExponent
             CharacterManager.instance.saveCharacter()
             customDialog.dismiss()
-            initializeAttributes(iteration + 1, inflater, context)
+            initializeAttributes(iteration + 1, inflater, context, callback)
         }
     }
 
     @SuppressLint("NewApi")
-    fun initializeSkills( inflater: LayoutInflater, context: Context) {
+    fun initializeSkills( inflater: LayoutInflater, context: Context, callback: () -> Unit) {
         var newExponent = 0
+        var maxExponent = 10
 
         val testDialog = AlertDialog.Builder(context)
         testDialog.setView(inflater.inflate(R.layout.skill_initialization_dialogue, null))
+        testDialog.setCancelable(false)
         val customDialog = testDialog.create()
         customDialog.show()
-        customDialog.setCancelable(false)
         customDialog.skillName.requestFocus()
         customDialog.skillName.showSoftInputOnFocus
         customDialog.nextButton.text = "Add"
         customDialog.prevButton.visibility = View.GONE
         customDialog.doneButton.visibility = View.VISIBLE
         customDialog.inc.setOnClickListener {
-            if (newExponent < 10) {
+            if (customDialog.skillName.text.toString() == "Mortal Wound") {
+                maxExponent = 16
+            }
+            if (newExponent < maxExponent) {
                 ++newExponent
                 customDialog.skillExp.text = newExponent.toString()
             } else {
@@ -137,8 +145,7 @@ class Initializer(var character: Character, var statIteration: Int = 0, var attr
             }
         }
         customDialog.doneButton.setOnClickListener {
-            character.skills.add(Skill(customDialog.skillName.text.toString(), newExponent))
-            CharacterManager.instance.saveCharacter()
+            callback()
             customDialog.dismiss()
 
         }
@@ -146,7 +153,7 @@ class Initializer(var character: Character, var statIteration: Int = 0, var attr
             character.skills.add(Skill(customDialog.skillName.text.toString(), newExponent))
             CharacterManager.instance.saveCharacter()
             customDialog.dismiss()
-            initializeSkills(inflater, context)
+            initializeSkills(inflater, context, callback)
         }
     }
 
