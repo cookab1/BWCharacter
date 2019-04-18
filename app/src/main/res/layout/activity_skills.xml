@@ -117,7 +117,7 @@
                     app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
                     android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
                     app:layout_constraintEnd_toStartOf="@+id/skillsEdittingSaveButton" android:layout_marginEnd="8dp"
-                    android:layout_marginRight="8dp" android:textSize="18sp"
+                    android:layout_marginRight="8dp" android:textSize="16sp"
                     android:textColor="@android:color/background_light"/>
             <Button
                     android:text="@string/editting_save"

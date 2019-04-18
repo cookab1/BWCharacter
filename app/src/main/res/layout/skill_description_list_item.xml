@@ -10,21 +10,26 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content" android:id="@+id/skillName"
             android:textStyle="bold"
+            android:fontFamily="@font/vinegar"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
             app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp" android:layout_marginRight="8dp"
-            android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent" android:textSize="16sp"/>
+            android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent"
+            android:textSize="17sp"/>
     <TextView
             android:text="TextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:id="@+id/skillRoot"
             android:textStyle="bold"
+            android:fontFamily="@font/vinegar"
             app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
-            android:textSize="16sp"
+            android:textSize="17sp"
             app:layout_constraintBottom_toBottomOf="@+id/skillName"/>
     <TextView
             android:text="TextView"
+            android:textSize="15sp"
+            android:fontFamily="@font/vinegar"
             android:layout_width="0dp"
             android:layout_height="wrap_content" android:id="@+id/skillDescription"
             android:layout_marginEnd="8dp" android:layout_marginRight="8dp"
