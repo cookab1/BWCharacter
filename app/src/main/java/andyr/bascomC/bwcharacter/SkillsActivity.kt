@@ -10,12 +10,13 @@ import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import com.bascomC.andyr.bwcharacter.Skill
-import andyr.bascomC.bwcharacter.Utilities.TEST_TYPE
+import Utilities.TEST_TYPE
 import com.bascomC.bwcharacter.R
 import kotlinx.android.synthetic.main.activity_skills.*
 import kotlinx.android.synthetic.main.skill_layout.*
 import kotlinx.android.synthetic.main.skill_list_item.*
 import kotlinx.android.synthetic.main.test_click_dialogue.*
+
 
 class SkillsActivity : BaseActivity() {
 
@@ -77,7 +78,7 @@ class SkillsActivity : BaseActivity() {
         }
 
         skillsEdittingSaveButton.setOnClickListener { setEditting(false) }
-        skillsButton.setOnClickListener {
+        ArthaButton.setOnClickListener {
             if (!onSkillsTab) {
                 headerBeingLearned.visibility = View.GONE
                 headerAptitude.visibility = View.GONE

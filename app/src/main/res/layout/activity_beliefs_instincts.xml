@@ -16,15 +16,6 @@
             android:background="@drawable/nav_button_selected" app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintEnd_toStartOf="@+id/traits_relationships"/>
     <Button
-            android:id="@+id/artha"
-            android:text="@string/artha"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:background="@drawable/nav_button" app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/traits_relationships"
-            app:layout_constraintHorizontal_bias="0.5"/>
-    <Button
             android:text="@string/traits_relationships"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -33,6 +24,15 @@
             android:background="@drawable/nav_button"
             app:layout_constraintStart_toEndOf="@+id/beliefs_instincts"
             app:layout_constraintEnd_toStartOf="@+id/artha"
+            app:layout_constraintHorizontal_bias="0.5"/>
+    <Button
+            android:id="@+id/artha"
+            android:text="@string/artha"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:background="@drawable/nav_button" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/traits_relationships"
             app:layout_constraintHorizontal_bias="0.5"/>
 
     <android.support.constraint.ConstraintLayout

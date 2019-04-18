@@ -136,7 +136,7 @@
                 android:layout_height="0dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toTopOf="@+id/skillsEdittingBanner"
-                android:padding="16dp" app:layout_constraintEnd_toStartOf="@+id/skillsButton"
+                android:padding="16dp" app:layout_constraintEnd_toStartOf="@+id/ArthaButton"
                 app:layout_constraintTop_toBottomOf="@+id/headerAptitude">
 
         </com.aitsuki.swipe.SwipeMenuRecyclerView>
@@ -145,7 +145,7 @@
                 android:text="@string/skills"
                 android:layout_width="28dp"
                 android:layout_height="0dp"
-                android:id="@+id/skillsButton"
+                android:id="@+id/ArthaButton"
                 android:paddingRight="10dp"
                 android:paddingLeft="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -160,7 +160,7 @@
                 android:paddingRight="10dp"
                 android:paddingLeft="8dp"
                 app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/skillsButton" android:layout_marginBottom="32dp"
+                app:layout_constraintTop_toBottomOf="@+id/ArthaButton" android:layout_marginBottom="32dp"
                 android:background="@drawable/side_tab_button"/>
 
     </android.support.constraint.ConstraintLayout>

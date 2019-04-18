@@ -11,7 +11,7 @@ import android.widget.TextView
 import android.text.style.UnderlineSpan
 import android.text.SpannableString
 import android.text.Spanned
-import andyr.bascomC.bwcharacter.Utilities.*
+import Utilities.*
 
 
 class SkillDescriptionListAdapter(var list: ArrayList<andyr.bascomC.bwcharacter.Descriptions>, parentContext: Context) : RecyclerView.Adapter<andyr.bascomC.bwcharacter.SkillDescriptionListAdapter.SkillDescriptionViewHolder>() {

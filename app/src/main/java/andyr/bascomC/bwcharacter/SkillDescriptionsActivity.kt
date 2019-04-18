@@ -8,13 +8,17 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.widget.TextView
-import andyr.bascomC.bwcharacter.Utilities.DESCRIPTIONS
+import Utilities.DESCRIPTIONS
+import android.content.Context
+import android.os.SystemClock
+import android.view.MotionEvent
+import android.view.inputmethod.InputMethodManager
 import kotlinx.android.synthetic.main.activity_skill_description.*
 
-class SkillDescriptionsActivity : andyr.bascomC.bwcharacter.BaseActivity() {
+class SkillDescriptionsActivity : BaseActivity() {
 
-    private val descriptionListFull: ArrayList<andyr.bascomC.bwcharacter.Descriptions> = createDescriptionList(DESCRIPTIONS)
-    private var descriptionList: ArrayList<andyr.bascomC.bwcharacter.Descriptions> = descriptionListFull
+    private val descriptionListFull: ArrayList<Descriptions> = createDescriptionList(DESCRIPTIONS)
+    private var descriptionList: ArrayList<Descriptions> = descriptionListFull
 
     @SuppressLint("NewApi")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,18 +30,18 @@ class SkillDescriptionsActivity : andyr.bascomC.bwcharacter.BaseActivity() {
 
         skillDescriptionRecyclerView.layoutManager = LinearLayoutManager(this)
         skillDescriptionRecyclerView.adapter =
-            andyr.bascomC.bwcharacter.SkillDescriptionListAdapter(descriptionList, this)
+            SkillDescriptionListAdapter(descriptionList, this)
 
         returnToCharacter.setOnClickListener{
-            val intent = Intent(this, andyr.bascomC.bwcharacter.StatsActivity::class.java)
+            val intent = Intent(this, StatsActivity::class.java)
             startActivity(intent)
         }
 
-        skillSearchBar.showSoftInputOnFocus
         searchButton.setOnClickListener {
             if (skillSearchBar.visibility == View.GONE) {
                 skillSearchBar.visibility = View.VISIBLE
-                skillSearchBar.requestFocus()
+                skillSearchBar.dispatchTouchEvent(MotionEvent.obtain(SystemClock.uptimeMillis(), SystemClock.uptimeMillis(), MotionEvent.ACTION_DOWN , 0f, 0f, 0))
+                skillSearchBar.dispatchTouchEvent(MotionEvent.obtain(SystemClock.uptimeMillis(), SystemClock.uptimeMillis(), MotionEvent.ACTION_UP , 0f, 0f, 0))
             } else {
                 skillSearchBar.setText("", TextView.BufferType.EDITABLE)
                 skillSearchBar.visibility = View.GONE
@@ -59,8 +63,8 @@ class SkillDescriptionsActivity : andyr.bascomC.bwcharacter.BaseActivity() {
         })
     }
 
-    private fun createDescriptionList(descriptions: Map<String, andyr.bascomC.bwcharacter.Descriptions>) : ArrayList<andyr.bascomC.bwcharacter.Descriptions> {
-        var retDescriptions : ArrayList<andyr.bascomC.bwcharacter.Descriptions> = arrayListOf()
+    private fun createDescriptionList(descriptions: Map<String, Descriptions>) : ArrayList<Descriptions> {
+        var retDescriptions : ArrayList<Descriptions> = arrayListOf()
         for ((name, description) in descriptions) {
             if(name == "Abbey-wise") {
                 description.name = "\n$name"
@@ -68,14 +72,14 @@ class SkillDescriptionsActivity : andyr.bascomC.bwcharacter.BaseActivity() {
                 description.name = name
             }
             if (name.contains("wise", true)) {
-                retDescriptions.add(andyr.bascomC.bwcharacter.Descriptions("", "Perception", mapOf(), description.name))
+                retDescriptions.add(Descriptions("", "Perception", mapOf(), description.name))
             } else {
                 retDescriptions.add(description)
             }
         }
         val progress = descriptions.size
         retDescriptions.add(
-            andyr.bascomC.bwcharacter.Descriptions(
+            Descriptions(
                 "This is as far as Andy has gotten. There are over 400 skills that he is typing in manually. He's only up to $progress. Thank you for your patience",
                 "Will",
                 mapOf(),
@@ -86,7 +90,7 @@ class SkillDescriptionsActivity : andyr.bascomC.bwcharacter.BaseActivity() {
     }
 
     private fun filterDescriptions(filter: CharSequence) {
-        var descriptionFilter : ArrayList<andyr.bascomC.bwcharacter.Descriptions> = arrayListOf()
+        var descriptionFilter : ArrayList<Descriptions> = arrayListOf()
         if (filter != "") {
             for (description in descriptionList) {
                 if (!description.name.contains(filter, true)) {

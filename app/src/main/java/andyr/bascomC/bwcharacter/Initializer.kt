@@ -7,8 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
-import andyr.bascomC.bwcharacter.Utilities.ATTRIBUTE_NAME
-import andyr.bascomC.bwcharacter.Utilities.STAT_NAME
+import Utilities.*
 import com.bascomC.andyr.bwcharacter.Skill
 import com.bascomC.bwcharacter.R
 import kotlinx.android.synthetic.main.skill_initialization_dialogue.*

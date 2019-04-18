@@ -2,10 +2,12 @@ package andyr.bascomC.bwcharacter
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.SystemClock
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
+import android.view.MotionEvent
 import android.view.View
 import android.widget.TextView
 import com.bascomC.bwcharacter.R
@@ -177,6 +179,8 @@ class NotesActivity: BaseActivity() {
         noteDialog.setView(layoutInflater.inflate(R.layout.note_layout, null))
         val customDialog = noteDialog.create()
         customDialog.show()
+//        customDialog.noteEditView.dispatchTouchEvent(MotionEvent.obtain(SystemClock.uptimeMillis(), SystemClock.uptimeMillis(), MotionEvent.ACTION_DOWN , 0f, 0f, 0))
+//        customDialog.noteEditView.dispatchTouchEvent(MotionEvent.obtain(SystemClock.uptimeMillis(), SystemClock.uptimeMillis(), MotionEvent.ACTION_UP , 0f, 0f, 0))
         customDialog.noteDoneButton.setOnClickListener {
             if(customDialog.noteEditView.text.isNotEmpty()) {
                 if (onGearTab) {

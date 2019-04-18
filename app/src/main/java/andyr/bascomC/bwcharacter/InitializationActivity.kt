@@ -18,7 +18,7 @@ class InitializationActivity : BaseActivity() {
 
         gearButton.setOnClickListener { initializer.initializeStats(initializer.statIteration, layoutInflater, this) {} }
         notesButton.setOnClickListener { initializer.initializeAttributes(initializer.attributeIteration, layoutInflater, this) {} }
-        skillsButton.setOnClickListener { initializer.initializeSkills(layoutInflater, this) {} }
+        ArthaButton.setOnClickListener { initializer.initializeSkills(layoutInflater, this) {} }
         returnToCharacter.setOnClickListener {
             val intent = Intent(this, StatsActivity::class.java)
             startActivity(intent)

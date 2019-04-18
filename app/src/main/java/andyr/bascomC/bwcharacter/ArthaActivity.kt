@@ -3,62 +3,70 @@ package andyr.bascomC.bwcharacter
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
+import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.TextView
+import android.view.View
+import com.bascomC.andyr.bwcharacter.Skill
 import com.bascomC.bwcharacter.R
-import kotlinx.android.synthetic.main.activity_beliefs_instincts.*
+import kotlinx.android.synthetic.main.activity_artha.*
 
-class BeliefsInstinctsActivity: BaseActivity() {
+class ArthaActivity: BaseActivity() {
 
     private lateinit var character : Character
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_beliefs_instincts)
+        setContentView(R.layout.activity_artha)
 
         character = CharacterManager.instance.getCharacter()
-
-        initializeBeliefsInstincts()
 
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
+
+        skillsRecyclerView.layoutManager = LinearLayoutManager(this)
+        setList(character.skillsWithArtha)
+
         infoToggleButton.setOnClickListener {
-            saveBeliefsInstincts()
             val intent = Intent(this, StatsActivity::class.java)
             startActivity(intent)
         }
+
         //Button Listeners
-        artha.setOnClickListener {
+        beliefs_instincts.setOnClickListener {
             CharacterManager.instance.saveCharacter()
-            val intent = Intent(this, ArthaActivity::class.java)
+            val intent = Intent(this, BeliefsInstinctsActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
             startActivity(intent)
         }
     }
 
-    private fun initializeBeliefsInstincts() {
-        belief1.setText(character.beliefs[0], TextView.BufferType.EDITABLE)
-        belief2.setText(character.beliefs[1], TextView.BufferType.EDITABLE)
-        belief3.setText(character.beliefs[2], TextView.BufferType.EDITABLE)
+    private fun setList(list: ArrayList<Skill>) {
+        skillsRecyclerView.adapter = ArthaListAdapter(
+            list,
+            this,
+            object : ClickListener {
+                override fun onPositionClicked(position: Int, view: View) {
+                    handleSkillClick(position, view)
+                }
 
-        instinct1.setText(character.instincts[0], TextView.BufferType.EDITABLE)
-        instinct2.setText(character.instincts[1], TextView.BufferType.EDITABLE)
-        instinct3.setText(character.instincts[2], TextView.BufferType.EDITABLE)
+                override fun onLongClicked(position: Int, view: View) {
+                    handleLongSkillClick(position, view)
+                }
+            })
     }
 
-    private fun saveBeliefsInstincts() {
-        character.beliefs[0] = belief1.text.toString()
-        character.beliefs[1] = belief2.text.toString()
-        character.beliefs[2] = belief3.text.toString()
+    fun handleSkillClick(position: Int, view: View) {
 
-        character.instincts[0] = instinct1.text.toString()
-        character.instincts[1] = instinct2.text.toString()
-        character.instincts[2] = instinct3.text.toString()
-
-        CharacterManager.instance.saveCharacter()
     }
+
+    fun handleLongSkillClick(position: Int, view: View) {
+
+    }
+
+
+    ///////////////////////// Create OptionsMenu /////////////////////////
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)

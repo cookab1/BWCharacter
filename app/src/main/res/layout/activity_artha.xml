@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <Button
+            android:id="@+id/beliefs_instincts"
+            android:text="@string/beliefs_instincts"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:background="@drawable/nav_button" app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintEnd_toStartOf="@+id/traits_relationships"/>
+    <Button
+            android:text="@string/traits_relationships"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/traits_relationships"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:background="@drawable/nav_button"
+            app:layout_constraintStart_toEndOf="@+id/beliefs_instincts"
+            app:layout_constraintEnd_toStartOf="@+id/artha"
+            app:layout_constraintHorizontal_bias="0.5"/>
+    <Button
+            android:id="@+id/artha"
+            android:text="@string/artha"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:background="@drawable/nav_button_selected" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/traits_relationships"
+            app:layout_constraintHorizontal_bias="0.5"/>
+
+    <android.support.constraint.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:background="@drawable/parchment_background"
+            app:layout_constraintBottom_toTopOf="@+id/traits_relationships">
+
+
+        <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                app:popupTheme="@android:color/transparent"
+                app:layout_scrollFlags="scroll|enterAlways"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" android:layout_marginTop="16dp" android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp" android:layout_marginLeft="8dp" android:layout_marginStart="8dp">
+
+        </android.support.v7.widget.Toolbar>
+
+        <android.support.v7.widget.Toolbar
+                android:id="@+id/header"
+                android:layout_width="258dp"
+                android:background="@drawable/header_artha"
+                app:popupTheme="@style/AppTheme.PopupOverlay"
+                app:layout_scrollFlags="scroll|enterAlways"
+                android:layout_height="56dp"
+                app:layout_constraintTop_toTopOf="parent" app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" android:layout_marginTop="16dp">
+
+        </android.support.v7.widget.Toolbar>
+
+        <ImageButton
+                android:layout_width="56dp"
+                android:layout_height="0dp"
+                android:id="@+id/infoToggleButton"
+                app:layout_constraintStart_toStartOf="@id/toolbar"
+                app:layout_constraintTop_toTopOf="@id/toolbar" android:src="@drawable/home"
+                android:background="@android:color/transparent"
+                app:layout_constraintBottom_toBottomOf="@+id/toolbar"/>
+
+        <android.support.constraint.ConstraintLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:id="@+id/ArthaDisplay"
+                app:layout_constraintTop_toBottomOf="@+id/header">
+
+            <Button android:layout_width="0dp" android:layout_height="wrap_content" android:text="Fate"
+                    app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" android:id="@+id/button6"
+                    app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toStartOf="@+id/button5"
+                    android:layout_marginLeft="8dp" android:layout_marginStart="8dp"/>
+            <Button
+                    android:text="Deeds"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content" android:id="@+id/button4"
+                    app:layout_constraintEnd_toEndOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toEndOf="@+id/button5"
+                    app:layout_constraintHorizontal_bias="0.5" android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"/>
+            <Button
+                    android:text="Personna"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content" android:id="@+id/button5"
+                    app:layout_constraintEnd_toStartOf="@+id/button4"
+                    app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toEndOf="@+id/button6"
+                    app:layout_constraintHorizontal_bias="0.5"/>
+
+        </android.support.constraint.ConstraintLayout>
+
+        <com.aitsuki.swipe.SwipeMenuRecyclerView
+
+                android:id="@+id/skillsRecyclerView"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintStart_toStartOf="parent"
+                android:padding="16dp" app:layout_constraintEnd_toStartOf="@+id/ArthaButton"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ArthaDisplay">
+
+        </com.aitsuki.swipe.SwipeMenuRecyclerView>
+
+        <Button
+                android:text="@string/artha"
+                android:layout_width="28dp"
+                android:layout_height="0dp"
+                android:id="@+id/ArthaButton"
+                android:paddingRight="10dp"
+                android:paddingLeft="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:background="@drawable/side_tab_button"
+                app:layout_constraintBottom_toTopOf="@+id/learningButton"
+                app:layout_constraintTop_toBottomOf="@+id/ArthaDisplay"/>
+        <Button
+                android:layout_width="28dp"
+                android:layout_height="0dp"
+                android:id="@+id/learningButton"
+                android:paddingRight="10dp"
+                android:paddingLeft="8dp"
+                app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ArthaButton" android:layout_marginBottom="32dp"
+                android:background="@drawable/side_tab_button" android:text="@string/descriptions"/>
+
+    </android.support.constraint.ConstraintLayout>
+
+</android.support.constraint.ConstraintLayout>

@@ -1,5 +1,6 @@
 package andyr.bascomC.bwcharacter
 
+import Utilities.*
 import android.content.Context
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
@@ -8,10 +9,7 @@ import android.text.Html
 import android.text.SpannableString
 import android.text.style.UnderlineSpan
 import android.util.Log
-import android.widget.Toast
-import andyr.bascomC.bwcharacter.Utilities.*
 import kotlinx.android.synthetic.main.skill_description_list_item.*
-import java.nio.charset.CharacterCodingException
 
 
 open class BaseActivity : AppCompatActivity() {

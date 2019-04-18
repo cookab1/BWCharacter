@@ -14,7 +14,7 @@ import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import com.bascomC.andyr.bwcharacter.Skill
-import andyr.bascomC.bwcharacter.Utilities.TEST_TYPE
+import Utilities.*
 import com.bascomC.bwcharacter.R
 import com.google.gson.Gson
 
@@ -40,8 +40,8 @@ class StatsActivity : BaseActivity() {
         CharacterManager.instance.setPrefsEditor()
 
         //reset preferences to original character
-        character = CharacterManager.instance.getCharacter()
-        CharacterManager.instance.saveCharacter()
+//        character = CharacterManager.instance.getCharacter()
+//        CharacterManager.instance.saveCharacter()
 
         character = loadCharacter()
         CharacterManager.instance.setCharacter(character)

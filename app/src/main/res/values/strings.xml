@@ -63,4 +63,5 @@
     <string name="editing_help_info">To enter edit-mode and enable editing on Skills and Stats, long-click on any item
         in the list. You will then be able to edit an item by clicking on the item you want to edit.
     </string>
+    <string name="descriptions">Descriptions</string>
 </resources>
